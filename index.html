@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14111d">
+  <meta name="description" content="2026년 11월 19일부터 GTA 6 PC버전을 기다린 시간을 기록합니다.">
+  <title>GTA 6 PC버전 기다리는 중</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      background: #14111d;
+      color: #fff5ed;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: clamp(16px, 5vw, 72px);
+      background: radial-gradient(ellipse at 75% 0%, #332138, transparent 60%), #14111d;
+    }
+    main {
+      width: min(100%, 1120px);
+      display: grid;
+      grid-template-columns: 45% 55%;
+      min-height: 560px;
+      overflow: hidden;
+      border-radius: 20px;
+      border: 1px solid #50394e;
+      background: #1b1423;
+      box-shadow: 0 24px 80px #0006;
+    }
+    h1 {
+      grid-area: 1 / 1;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      margin: 0;
+      padding: clamp(28px, 4.4vw, 64px);
+      font-weight: 500;
+      font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+      line-height: 1.4;
+      color: #e4c9d7;
+      word-break: keep-all;
+    }
+    .elapsed {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px 12px;
+      color: #e4c9d7;
+    }
+    .elapsed span { white-space: nowrap; }
+    .elapsed b {
+      font: 650 clamp(1.65rem, 2.8vw, 2.65rem)/1 ui-monospace, Menlo, Consolas, monospace;
+      font-variant-numeric: tabular-nums;
+      color: #ffc18c;
+    }
+    .elapsed span:not(:first-child) b { display: inline-block; min-width: 2ch; text-align: right; }
+    .title {
+      font-size: clamp(2.2rem, 4.2vw, 4.35rem);
+      line-height: 1.08;
+      font-weight: 850;
+      letter-spacing: -.055em;
+      color: #fff5ed;
+    }
+    .title span { display: block; }
+    .art {
+      grid-area: 1 / 2;
+      position: relative;
+      min-width: 0;
+      margin: 0;
+    }
+    .art img { position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: 68% center; }
+    .art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #1b1423, transparent 21%); }
+    .zone { color: #c8a8bc; font-size: .8rem; letter-spacing: .025em; }
+    .no-script { font-size: .85rem; }
+    @media (max-width: 740px) {
+      main { grid-template-columns: 1fr; grid-template-rows: auto auto; min-height: 0; }
+      .art { grid-area: 1 / 1; aspect-ratio: 4 / 3; }
+      .art::after { background: linear-gradient(0deg, #1b1423, transparent 28%); }
+      h1 { grid-area: 2 / 1; gap: 16px; padding: 4px clamp(18px, 6vw, 44px) 28px; }
+      .elapsed { gap: 4px 8px; }
+      .elapsed b { font-size: clamp(1.35rem, 5vw, 2rem); }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>
+      <time datetime="2026-11-19T00:00:00+09:00">2026년 11월 19일부터</time>
+      <span class="elapsed" role="timer" aria-live="off">
+        <span><b id="days">0</b>일</span>
+        <span><b id="hours">0</b>시간</span>
+        <span><b id="minutes">0</b>분</span>
+        <span><b id="seconds">0</b>초째</span>
+      </span>
+      <span class="title"><span>GTA 6 PC버전</span> 기다리는 중</span>
+      <span class="zone">한국 표준시 기준 (KST)</span>
+      <noscript><span class="no-script">카운터를 보려면 JavaScript를 켜 주세요.</span></noscript>
+    </h1>
+    <figure class="art">
+      <img src="./waiting-at-desk.webp" width="1536" height="1024" alt="책상 앞에 턱을 괴고 따분한 표정으로 모니터를 바라보는 남자">
+    </figure>
+  </main>
+  <script>
+    const startedAt = Date.parse(document.querySelector("time").dateTime);
+    const days = document.getElementById("days");
+    const hours = document.getElementById("hours");
+    const minutes = document.getElementById("minutes");
+    const seconds = document.getElementById("seconds");
+    let nextTick;
+
+    function renderCounter() {
+      const now = Date.now();
+      const elapsed = Math.max(0, Math.floor((now - startedAt) / 1000));
+
+      days.textContent = Math.floor(elapsed / 86400).toLocaleString("ko-KR");
+      hours.textContent = Math.floor(elapsed / 3600) % 24;
+      minutes.textContent = Math.floor(elapsed / 60) % 60;
+      seconds.textContent = elapsed % 60;
+
+      clearTimeout(nextTick);
+      nextTick = setTimeout(renderCounter, 1000 - (now % 1000));
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) renderCounter();
+    });
+    window.addEventListener("pageshow", renderCounter);
+    renderCounter();
+  </script>
+</body>
+</html>
