@@ -26,32 +26,6 @@
       <img src="./gamer-at-desk.webp" width="1536" height="1024" alt="게이밍 헤드셋을 쓰고 책상 앞에 턱을 괸 채 따분한 표정으로 모니터를 바라보는 남자">
     </figure>
   </main>
-  <script>
-    const startedAt = Date.parse(document.querySelector("time").dateTime);
-    const days = document.getElementById("days");
-    const hours = document.getElementById("hours");
-    const minutes = document.getElementById("minutes");
-    const seconds = document.getElementById("seconds");
-    let nextTick;
-
-    function renderCounter() {
-      const now = Date.now();
-      const elapsed = Math.max(0, Math.floor((now - startedAt) / 1000));
-
-      days.textContent = Math.floor(elapsed / 86400).toLocaleString("ko-KR");
-      hours.textContent = Math.floor(elapsed / 3600) % 24;
-      minutes.textContent = Math.floor(elapsed / 60) % 60;
-      seconds.textContent = elapsed % 60;
-
-      clearTimeout(nextTick);
-      nextTick = setTimeout(renderCounter, 1000 - (now % 1000));
-    }
-
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) renderCounter();
-    });
-    window.addEventListener("pageshow", renderCounter);
-    renderCounter();
-  </script>
+  <script src="./counter.js"></script>
 </body>
 </html>
